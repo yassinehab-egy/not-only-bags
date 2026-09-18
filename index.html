@@ -1,0 +1,1522 @@
+```html
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Store</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Cairo", sans-serif;
+            background: #fafafa;
+            color: #171717;
+        }
+
+        button,
+        input,
+        textarea,
+        select {
+            font: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .container {
+            width: min(1180px, 92%);
+            margin: auto;
+        }
+
+        /* NAVBAR */
+
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(255,255,255,.92);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid #eee;
+        }
+
+        .nav-inner {
+            min-height: 55px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 30px;
+        }
+
+        .logo {
+            font-size: 23px;
+            font-weight: 800;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 28px;
+            color: #555;
+        }
+
+        .nav-links a {
+            transition: .2s;
+        }
+
+        .nav-links a:hover {
+            color: #000;
+        }
+
+        .language-btn {
+            border: 1px solid #ddd;
+            background: white;
+            padding: 6px 13px;
+            border-radius: 10px;
+        }
+
+        /* HERO */
+
+        .hero {
+            min-height: 570px;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(120deg,#111,#292929);
+            color: white;
+        }
+
+        .hero-text {
+            max-width: 680px;
+        }
+
+        .hero-badge,
+        .section-label {
+            display: inline-block;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            opacity: .7;
+        }
+
+        .hero h1 {
+            font-size: clamp(38px,6vw,70px);
+            line-height: 1.1;
+            margin-bottom: 22px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: #ddd;
+            margin-bottom: 30px;
+        }
+
+        .primary-btn {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            border: none;
+            background: #111;
+            color: white;
+            padding: 13px 24px;
+            border-radius: 12px;
+            font-weight: 700;
+            transition: .2s;
+        }
+
+        .primary-btn:hover {
+            transform: translateY(-2px);
+            opacity: .88;
+        }
+
+        .hero .primary-btn {
+            background: white;
+            color: #111;
+        }
+
+        /* PRODUCTS */
+
+        .products-section {
+            padding: 90px 0;
+        }
+
+        .section-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .section-heading h2,
+        .about-card h2 {
+            font-size: 35px;
+        }
+
+        .search-box input {
+            width: 280px;
+            padding: 13px 17px;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            outline: none;
+            background: white;
+        }
+
+        .categories {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+
+        .category-btn {
+            flex-shrink: 0;
+            padding: 9px 17px;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            background: white;
+        }
+
+        .category-btn.active {
+            background: #111;
+            color: white;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(4,1fr);
+            gap: 22px;
+        }
+
+        .product-card {
+            background: white;
+            border: 1px solid #eee;
+            border-radius: 18px;
+            overflow: hidden;
+            transition: .25s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,.08);
+        }
+
+        .product-image {
+            width: 100%;
+            aspect-ratio: 1;
+            object-fit: cover;
+            background: #f2f2f2;
+        }
+
+        .product-info {
+            padding: 18px;
+        }
+
+        .product-category {
+            font-size: 12px;
+            color: #888;
+        }
+
+        .product-name {
+            font-size: 18px;
+            margin: 6px 0;
+        }
+
+        .product-description {
+            font-size: 13px;
+            color: #777;
+            line-height: 1.7;
+            min-height: 45px;
+        }
+
+        .price-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 14px 0;
+        }
+
+        .price {
+            font-weight: 800;
+            font-size: 18px;
+        }
+
+        .old-price {
+            color: #999;
+            font-size: 13px;
+        }
+
+        /* ABOUT */
+
+        .about-section {
+            padding: 70px 0;
+            background: #f2f2f2;
+        }
+
+        .about-card {
+            max-width: 750px;
+        }
+
+        .about-card p {
+            color: #666;
+            line-height: 2;
+        }
+
+        /* MODALS */
+
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,.65);
+            z-index: 500;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            position: relative;
+            background: white;
+            width: min(850px,100%);
+            max-height: 92vh;
+            overflow-y: auto;
+            border-radius: 22px;
+            padding: 25px;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            inset-inline-end: 15px;
+            width: 38px;
+            height: 38px;
+            border: none;
+            border-radius: 50%;
+            background: white;
+            box-shadow: 0 4px 15px rgba(0,0,0,.12);
+            font-size: 25px;
+            z-index: 2;
+        }
+
+        .modal-content > img {
+            width: 100%;
+            max-height: 400px;
+            object-fit: contain;
+            border-radius: 15px;
+            background: #f4f4f4;
+        }
+
+        .modal-info {
+            padding-top: 20px;
+        }
+
+        .modal-info h2 {
+            margin-bottom: 10px;
+        }
+
+        .modal-info p {
+            color: #666;
+            line-height: 1.8;
+        }
+
+        .modal-price {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin: 20px 0;
+        }
+
+        .modal-price span {
+            font-size: 25px;
+            font-weight: 800;
+        }
+
+        .modal-price del {
+            color: #999;
+        }
+
+        .full {
+            width: 100%;
+        }
+
+        /* FORM */
+
+        .order-content {
+            max-width: 500px;
+        }
+
+        .order-content h2 {
+            margin-bottom: 20px;
+        }
+
+        #orderForm {
+            display: flex;
+            flex-direction: column;
+            gap: 13px;
+        }
+
+        #orderForm input,
+        #orderForm textarea,
+        #orderForm select {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            outline: none;
+            background: white;
+        }
+
+        #orderForm textarea {
+            min-height: 90px;
+            resize: vertical;
+        }
+
+        .loading,
+        .empty {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 70px 10px;
+            color: #888;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: #111;
+            color: white;
+            padding: 13px 20px;
+            border-radius: 10px;
+            z-index: 1000;
+            transition: .3s;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        @media (max-width:900px) {
+
+            .products-grid {
+                grid-template-columns: repeat(2,1fr);
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .section-heading {
+                align-items: stretch;
+                flex-direction: column;
+            }
+
+            .search-box input {
+                width: 100%;
+            }
+        }
+
+        @media (max-width:520px) {
+
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero {
+                min-height: 500px;
+            }
+
+            .hero h1 {
+                font-size: 40px;
+            }
+
+            .products-section {
+                padding: 60px 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="navbar">
+
+    <div class="container nav-inner">
+
+        <a href="#" class="logo" id="storeLogo">
+            Store
+        </a>
+
+        <nav class="nav-links">
+
+            <a href="#home" data-i18n="home">
+                الرئيسية
+            </a>
+
+            <a href="#products" data-i18n="products">
+                المنتجات
+            </a>
+
+            <a href="#about" data-i18n="about">
+                عن المتجر
+            </a>
+
+        </nav>
+
+        <button class="language-btn" id="languageBtn">
+            English
+        </button>
+
+    </div>
+
+</header>
+
+
+<main>
+
+<section class="hero" id="home">
+
+    <div class="container">
+
+        <div class="hero-text">
+
+            <span class="hero-badge" data-i18n="welcome">
+                أهلاً بيك
+            </span>
+
+            <h1 id="heroTitle">
+                أهلاً بيكم في متجرنا
+            </h1>
+
+            <p id="heroDescription">
+                اكتشف منتجاتنا واختر اللي يناسبك.
+            </p>
+
+            <a
+                href="#products"
+                class="primary-btn"
+                data-i18n="browseProducts"
+            >
+                تصفح المنتجات
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="products-section" id="products">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <div>
+
+                <span
+                    class="section-label"
+                    data-i18n="ourProducts"
+                >
+                    منتجاتنا
+                </span>
+
+                <h2 data-i18n="discover">
+                    اكتشف منتجاتنا
+                </h2>
+
+            </div>
+
+            <div class="search-box">
+
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="ابحث عن منتج..."
+                >
+
+            </div>
+
+        </div>
+
+
+        <div
+            class="categories"
+            id="categories"
+        ></div>
+
+
+        <div
+            class="products-grid"
+            id="productsGrid"
+        >
+
+            <div class="loading">
+                جاري تحميل المنتجات...
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="about-section" id="about">
+
+    <div class="container">
+
+        <div class="about-card">
+
+            <span
+                class="section-label"
+                data-i18n="about"
+            >
+                عن المتجر
+            </span>
+
+            <h2 id="aboutTitle">
+                عن متجرنا
+            </h2>
+
+            <p id="aboutDescription">
+                مرحبًا بكم في متجرنا.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+</main>
+
+
+<!-- PRODUCT MODAL -->
+
+<div class="modal" id="productModal">
+
+    <div class="modal-content">
+
+        <button
+            class="close-modal"
+            id="closeProductModal"
+        >
+            ×
+        </button>
+
+        <img
+            id="modalImage"
+            src=""
+            alt=""
+        >
+
+        <div class="modal-info">
+
+            <h2 id="modalName"></h2>
+
+            <p id="modalDescription"></p>
+
+            <div class="modal-price">
+
+                <span id="modalPrice"></span>
+
+                <del id="modalOldPrice"></del>
+
+            </div>
+
+            <button
+                class="primary-btn full"
+                id="buyButton"
+            >
+                شراء الآن
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ORDER MODAL -->
+
+<div class="modal" id="orderModal">
+
+    <div class="modal-content order-content">
+
+        <button
+            class="close-modal"
+            id="closeOrderModal"
+        >
+            ×
+        </button>
+
+        <h2 data-i18n="orderTitle">
+            إتمام الطلب
+        </h2>
+
+        <form id="orderForm">
+
+            <input
+                type="text"
+                id="customerName"
+                placeholder="الاسم"
+                required
+            >
+
+            <select id="governorate" required>
+
+                <option value="">
+                    اختر المحافظة
+                </option>
+
+                <option>القاهرة</option>
+                <option>الجيزة</option>
+                <option>القليوبية</option>
+                <option>الإسكندرية</option>
+                <option>البحيرة</option>
+                <option>الشرقية</option>
+                <option>الدقهلية</option>
+                <option>الغربية</option>
+                <option>المنوفية</option>
+                <option>دمياط</option>
+                <option>بورسعيد</option>
+                <option>الإسماعيلية</option>
+                <option>السويس</option>
+                <option>أسوان</option>
+                <option>الأقصر</option>
+                <option>قنا</option>
+                <option>سوهاج</option>
+                <option>أسيوط</option>
+                <option>المنيا</option>
+                <option>بني سويف</option>
+                <option>الفيوم</option>
+                <option>مطروح</option>
+                <option>البحر الأحمر</option>
+                <option>الوادي الجديد</option>
+                <option>شمال سيناء</option>
+                <option>جنوب سيناء</option>
+
+            </select>
+
+            <input
+                type="tel"
+                id="phone"
+                placeholder="رقم الهاتف"
+                required
+            >
+
+            <textarea
+                id="address"
+                placeholder="العنوان بالتفصيل"
+                required
+            ></textarea>
+
+            <input
+                type="number"
+                id="quantity"
+                min="1"
+                value="1"
+                required
+            >
+
+            <textarea
+                id="notes"
+                placeholder="ملاحظات إضافية (اختياري)"
+            ></textarea>
+
+            <button
+                type="submit"
+                class="primary-btn full"
+            >
+                تأكيد الطلب
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<div class="toast" id="toast"></div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+
+const SUPABASE_URL =
+    "https://wcpyvwbdjdcbkkgtfxnn.supabase.co";
+
+const SUPABASE_PUBLISHABLE_KEY =
+    "sb_publishable_QyEhKHovq5XXTdsFZ4nFpw_rn9NMjKP";
+
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
+    );
+
+
+let language =
+    localStorage.getItem("language") || "ar";
+
+let products = [];
+
+let store = null;
+
+let currentProduct = null;
+
+let selectedCategory = "all";
+
+
+const translations = {
+
+    ar: {
+        home: "الرئيسية",
+        products: "المنتجات",
+        about: "عن المتجر",
+        welcome: "أهلاً بيك",
+        browseProducts: "تصفح المنتجات",
+        ourProducts: "منتجاتنا",
+        discover: "اكتشف منتجاتنا",
+        orderTitle: "إتمام الطلب",
+        search: "ابحث عن منتج...",
+        buy: "شراء الآن",
+        all: "الكل",
+        loading: "جاري تحميل المنتجات...",
+        noProducts: "لا توجد منتجات.",
+        orderSuccess: "تم تسجيل طلبك بنجاح!",
+        error: "حدث خطأ، حاول مرة أخرى.",
+        currency: "جنيه"
+    },
+
+    en: {
+        home: "Home",
+        products: "Products",
+        about: "About",
+        welcome: "Welcome",
+        browseProducts: "Browse Products",
+        ourProducts: "Our Products",
+        discover: "Discover Our Products",
+        orderTitle: "Place Your Order",
+        search: "Search for a product...",
+        buy: "Buy Now",
+        all: "All",
+        loading: "Loading products...",
+        noProducts: "No products found.",
+        orderSuccess: "Your order was successfully submitted!",
+        error: "Something went wrong.",
+        currency: "EGP"
+    }
+
+};
+
+
+document.addEventListener(
+    "DOMContentLoaded",
+    async () => {
+
+        applyLanguage();
+
+        await loadStore();
+
+        await loadProducts();
+
+        setupEvents();
+
+    }
+);
+
+
+async function loadStore() {
+
+    const { data, error } =
+        await supabaseClient
+            .from("store_settings")
+            .select("*")
+            .eq("id", 1)
+            .single();
+
+    if (error) {
+
+        console.error(error);
+
+        return;
+
+    }
+
+    store = data;
+
+    updateStoreUI();
+}
+
+
+function updateStoreUI() {
+
+    if (!store) return;
+
+    const suffix =
+        language === "ar"
+            ? "_ar"
+            : "_en";
+
+    const name =
+        store[`store_name${suffix}`] ||
+        "Store";
+
+    const description =
+        store[`description${suffix}`] ||
+        "";
+
+    document.title = name;
+
+    document.getElementById("storeLogo")
+        .textContent = name;
+
+    document.getElementById("heroTitle")
+        .textContent = name;
+
+    document.getElementById("heroDescription")
+        .textContent = description;
+
+    document.getElementById("aboutTitle")
+        .textContent = name;
+
+    document.getElementById("aboutDescription")
+        .textContent = description;
+}
+
+
+async function loadProducts() {
+
+    const { data, error } =
+        await supabaseClient
+            .from("products")
+            .select("*")
+            .eq("available", true)
+            .order("created_at", {
+                ascending: false
+            });
+
+    if (error) {
+
+        console.error(error);
+
+        showToast(
+            translations[language].error
+        );
+
+        return;
+
+    }
+
+    products = data || [];
+
+    renderCategories();
+
+    renderProducts();
+}
+
+
+function renderCategories() {
+
+    const container =
+        document.getElementById("categories");
+
+    const categories =
+        new Map();
+
+    products.forEach(product => {
+
+        const category =
+            language === "ar"
+                ? product.category_ar
+                : product.category_en;
+
+        if (category) {
+            categories.set(category, category);
+        }
+
+    });
+
+    container.innerHTML = "";
+
+    const allButton =
+        document.createElement("button");
+
+    allButton.className =
+        "category-btn";
+
+    if (selectedCategory === "all") {
+        allButton.classList.add("active");
+    }
+
+    allButton.textContent =
+        translations[language].all;
+
+    allButton.onclick = () => {
+
+        selectedCategory = "all";
+
+        renderCategories();
+
+        renderProducts();
+
+    };
+
+    container.appendChild(allButton);
+
+
+    categories.forEach(category => {
+
+        const button =
+            document.createElement("button");
+
+        button.className =
+            "category-btn";
+
+        if (selectedCategory === category) {
+            button.classList.add("active");
+        }
+
+        button.textContent = category;
+
+        button.onclick = () => {
+
+            selectedCategory = category;
+
+            renderCategories();
+
+            renderProducts();
+
+        };
+
+        container.appendChild(button);
+
+    });
+
+}
+
+
+function renderProducts() {
+
+    const grid =
+        document.getElementById("productsGrid");
+
+    const search =
+        document.getElementById("searchInput")
+            .value
+            .trim()
+            .toLowerCase();
+
+
+    const filtered =
+        products.filter(product => {
+
+            const name =
+                language === "ar"
+                    ? product.name_ar
+                    : product.name_en;
+
+            const description =
+                language === "ar"
+                    ? product.description_ar
+                    : product.description_en;
+
+            const category =
+                language === "ar"
+                    ? product.category_ar
+                    : product.category_en;
+
+            return (
+                (
+                    name.toLowerCase().includes(search) ||
+                    description.toLowerCase().includes(search)
+                )
+                &&
+                (
+                    selectedCategory === "all" ||
+                    category === selectedCategory
+                )
+            );
+
+        });
+
+
+    grid.innerHTML = "";
+
+
+    if (!filtered.length) {
+
+        grid.innerHTML = `
+            <div class="empty">
+                ${translations[language].noProducts}
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    filtered.forEach(product => {
+
+        const name =
+            language === "ar"
+                ? product.name_ar
+                : product.name_en;
+
+        const description =
+            language === "ar"
+                ? product.description_ar
+                : product.description_en;
+
+        const category =
+            language === "ar"
+                ? product.category_ar
+                : product.category_en;
+
+        const image =
+            product.image_url ||
+            "https://placehold.co/600x600?text=Product";
+
+
+        const card =
+            document.createElement("article");
+
+        card.className =
+            "product-card";
+
+
+        card.innerHTML = `
+
+            <img
+                class="product-image"
+                src="${escapeHTML(image)}"
+                alt="${escapeHTML(name)}"
+                loading="lazy"
+            >
+
+            <div class="product-info">
+
+                <span class="product-category">
+                    ${escapeHTML(category || "")}
+                </span>
+
+                <h3 class="product-name">
+                    ${escapeHTML(name)}
+                </h3>
+
+                <p class="product-description">
+                    ${escapeHTML(description || "")}
+                </p>
+
+                <div class="price-row">
+
+                    <span class="price">
+                        ${formatPrice(product.price)}
+                    </span>
+
+                    ${
+                        product.old_price
+                            ? `
+                                <del class="old-price">
+                                    ${formatPrice(product.old_price)}
+                                </del>
+                            `
+                            : ""
+                    }
+
+                </div>
+
+                <button
+                    class="primary-btn full"
+                >
+                    ${translations[language].buy}
+                </button>
+
+            </div>
+        `;
+
+
+        card.querySelector("button")
+            .onclick = () =>
+                openProduct(product);
+
+
+        grid.appendChild(card);
+
+    });
+
+}
+
+
+function openProduct(product) {
+
+    currentProduct = product;
+
+    const name =
+        language === "ar"
+            ? product.name_ar
+            : product.name_en;
+
+    const description =
+        language === "ar"
+            ? product.description_ar
+            : product.description_en;
+
+
+    document.getElementById("modalImage")
+        .src =
+        product.image_url ||
+        "https://placehold.co/600x600?text=Product";
+
+
+    document.getElementById("modalName")
+        .textContent = name;
+
+    document.getElementById("modalDescription")
+        .textContent = description;
+
+    document.getElementById("modalPrice")
+        .textContent =
+        formatPrice(product.price);
+
+
+    const oldPrice =
+        document.getElementById("modalOldPrice");
+
+
+    if (product.old_price) {
+
+        oldPrice.textContent =
+            formatPrice(product.old_price);
+
+        oldPrice.style.display =
+            "inline";
+
+    } else {
+
+        oldPrice.style.display =
+            "none";
+
+    }
+
+
+    document.getElementById("productModal")
+        .classList.add("active");
+}
+
+
+async function submitOrder(event) {
+
+    event.preventDefault();
+
+    if (!currentProduct) return;
+
+
+    const customerName =
+        document.getElementById("customerName")
+            .value.trim();
+
+    const governorate =
+        document.getElementById("governorate")
+            .value;
+
+    const phone =
+        document.getElementById("phone")
+            .value.trim();
+
+    const address =
+        document.getElementById("address")
+            .value.trim();
+
+    const quantity =
+        Number(
+            document.getElementById("quantity")
+                .value
+        );
+
+    const notes =
+        document.getElementById("notes")
+            .value.trim();
+
+
+    const productName =
+        language === "ar"
+            ? currentProduct.name_ar
+            : currentProduct.name_en;
+
+
+    const { error } =
+        await supabaseClient
+            .from("orders")
+            .insert({
+
+                product_id:
+                    currentProduct.id,
+
+                product_name:
+                    productName,
+
+                quantity,
+
+                customer_name:
+                    customerName,
+
+                governorate,
+
+                phone,
+
+                address,
+
+                notes
+
+            });
+
+
+    if (error) {
+
+        console.error(error);
+
+        showToast(
+            translations[language].error
+        );
+
+        return;
+
+    }
+
+
+    showToast(
+        translations[language].orderSuccess
+    );
+
+
+    const whatsapp =
+        store?.whatsapp || "";
+
+
+    if (whatsapp) {
+
+        const message =
+
+`New Order
+
+Product: ${productName}
+Quantity: ${quantity}
+Customer: ${customerName}
+Governorate: ${governorate}
+Phone: ${phone}
+Address: ${address}
+Notes: ${notes || "-"}`;
+
+
+        window.open(
+            `https://wa.me/${whatsapp}?text=${encodeURIComponent(message)}`,
+            "_blank"
+        );
+
+    }
+
+
+    document.getElementById("orderForm")
+        .reset();
+
+    document.getElementById("orderModal")
+        .classList.remove("active");
+
+}
+
+
+function setupEvents() {
+
+    document.getElementById("searchInput")
+        .addEventListener(
+            "input",
+            renderProducts
+        );
+
+
+    document.getElementById("languageBtn")
+        .onclick =
+        toggleLanguage;
+
+
+    document.getElementById("closeProductModal")
+        .onclick = () => {
+
+            document.getElementById("productModal")
+                .classList.remove("active");
+
+        };
+
+
+    document.getElementById("closeOrderModal")
+        .onclick = () => {
+
+            document.getElementById("orderModal")
+                .classList.remove("active");
+
+        };
+
+
+    document.getElementById("buyButton")
+        .onclick = () => {
+
+            document.getElementById("productModal")
+                .classList.remove("active");
+
+            document.getElementById("orderModal")
+                .classList.add("active");
+
+        };
+
+
+    document.getElementById("orderForm")
+        .addEventListener(
+            "submit",
+            submitOrder
+        );
+
+}
+
+
+function toggleLanguage() {
+
+    language =
+        language === "ar"
+            ? "en"
+            : "ar";
+
+    localStorage.setItem(
+        "language",
+        language
+    );
+
+    applyLanguage();
+
+    updateStoreUI();
+
+    renderCategories();
+
+    renderProducts();
+
+}
+
+
+function applyLanguage() {
+
+    document.documentElement.lang =
+        language;
+
+    document.documentElement.dir =
+        language === "ar"
+            ? "rtl"
+            : "ltr";
+
+
+    document.querySelectorAll(
+        "[data-i18n]"
+    ).forEach(element => {
+
+        const key =
+            element.dataset.i18n;
+
+        element.textContent =
+            translations[language][key];
+
+    });
+
+
+    document.getElementById("languageBtn")
+        .textContent =
+        language === "ar"
+            ? "English"
+            : "العربية";
+
+
+    document.getElementById("searchInput")
+        .placeholder =
+        translations[language].search;
+
+}
+
+
+function formatPrice(price) {
+
+    return `${Number(price).toLocaleString(
+        language === "ar"
+            ? "ar-EG"
+            : "en-US"
+    )} ${translations[language].currency}`;
+
+}
+
+
+function showToast(message) {
+
+    const toast =
+        document.getElementById("toast");
+
+    toast.textContent = message;
+
+    toast.classList.add("show");
+
+    setTimeout(() => {
+
+        toast.classList.remove("show");
+
+    }, 3000);
+
+}
+
+
+function escapeHTML(value) {
+
+    return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+
+}
+
+</script>
+
+</body>
+</html>
+```
